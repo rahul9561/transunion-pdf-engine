@@ -6,7 +6,7 @@ from __future__ import annotations
 
 import pypdf
 
-from pdf_engine import generate_report
+from transunion_pdf_engine import generate_report
 
 
 def _extract_text(pdf_path: str) -> str:
@@ -105,7 +105,7 @@ def test_no_hardcoded_sample_customer_in_engine_source():
     """
     import pathlib
 
-    engine_root = pathlib.Path(__file__).resolve().parent.parent / "pdf_engine"
+    engine_root = pathlib.Path(__file__).resolve().parent.parent / "transunion_pdf_engine"
     forbidden = ["ANAND VARDHAN GOYAL", "CAZPG3241C", "9217010023", "ANANDVARDHAN001"]
     for py_file in engine_root.rglob("*.py"):
         content = py_file.read_text(encoding="utf-8")

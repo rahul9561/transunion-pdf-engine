@@ -1,4 +1,4 @@
-"""ReportLab paragraph and table styles built from :mod:`pdf_engine.theme`.
+"""ReportLab paragraph and table styles built from :mod:`transunion_pdf_engine.theme`.
 
 Visual system (matches ``docs/sample_report.pdf.pdf``):
 - Section headings are plain cyan uppercase text (no filled banner).
@@ -17,7 +17,7 @@ from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_RIGHT
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.platypus import TableStyle
 
-from pdf_engine import theme
+from transunion_pdf_engine import theme
 
 
 def get_paragraph_styles() -> dict[str, ParagraphStyle]:

@@ -9,9 +9,9 @@ import math
 from reportlab.lib.units import cm
 from reportlab.platypus import Paragraph, Spacer, Table
 
-from pdf_engine import constants, theme
-from pdf_engine.helpers import format_date, format_int, logo_drawing
-from pdf_engine.models import CreditReport
+from transunion_pdf_engine import constants, theme
+from transunion_pdf_engine.helpers import format_date, format_int, logo_drawing
+from transunion_pdf_engine.models import CreditReport
 
 
 def _angle_for_score(score: int) -> float:

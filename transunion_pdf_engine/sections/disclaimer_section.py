@@ -1,7 +1,7 @@
 """End-of-report marker and the static regulatory disclaimer / copyright text.
 
 None of this text is derived from the JSON feed -- it is static regulatory
-copy owned by the engine (see ``pdf_engine.constants``), reproduced verbatim
+copy owned by the engine (see ``transunion_pdf_engine.constants``), reproduced verbatim
 from the reference report.
 """
 
@@ -9,9 +9,9 @@ from __future__ import annotations
 
 from reportlab.platypus import Paragraph, Spacer
 
-from pdf_engine import constants
-from pdf_engine.helpers import hr_rule
-from pdf_engine.models import CreditReport
+from transunion_pdf_engine import constants
+from transunion_pdf_engine.helpers import hr_rule
+from transunion_pdf_engine.models import CreditReport
 
 
 def render(story: list, report: CreditReport, styles: dict) -> None:

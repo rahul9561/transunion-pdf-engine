@@ -1,5 +1,5 @@
 """Parses a raw TransUnion CIBIL JSON response into a normalized
-:class:`~pdf_engine.models.CreditReport`.
+:class:`~transunion_pdf_engine.models.CreditReport`.
 
 Design rules (see ``docs/JSON_TO_PDF_MAPPING.md`` for the full field trace):
 
@@ -20,7 +20,7 @@ from __future__ import annotations
 import logging
 from typing import Any
 
-from pdf_engine.constants import (
+from transunion_pdf_engine.constants import (
     account_type_label,
     address_ownership_label,
     identifier_name_label,
@@ -31,7 +31,7 @@ from pdf_engine.constants import (
     score_band_for,
     state_label,
 )
-from pdf_engine.helpers import (
+from transunion_pdf_engine.helpers import (
     as_list,
     clean_str,
     parse_any_date,
@@ -41,7 +41,7 @@ from pdf_engine.helpers import (
     to_decimal,
     to_int,
 )
-from pdf_engine.models import (
+from transunion_pdf_engine.models import (
     Account,
     Address,
     CreditReport,
@@ -57,7 +57,7 @@ from pdf_engine.models import (
     SummaryTotals,
 )
 
-logger = logging.getLogger("pdf_engine")
+logger = logging.getLogger("transunion_pdf_engine")
 
 
 def parse_credit_report(raw_json: Any) -> CreditReport:

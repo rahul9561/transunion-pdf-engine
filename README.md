@@ -4,7 +4,7 @@ A standalone, reusable PDF generation engine that turns a raw **TransUnion
 CIBIL** credit report API response into a professional, print-ready PDF
 report using [ReportLab](https://www.reportlab.com/).
 
-The engine is **framework-agnostic**: `pdf_engine/` has no dependency on
+The engine is **framework-agnostic**: `transunion_pdf_engine/` has no dependency on
 Django, Flask, or any web framework. The only Django-aware code lives in
 `services/transunion_pdf_service.py`.
 
@@ -22,9 +22,9 @@ pip install -r requirements.txt
 
 Requirements: Python 3.10+, `reportlab`, `svglib` (renders the local CIBIL
 logo SVG), `pypdf` (for tests). Django is **not** required to use
-`pdf_engine` directly; it is only needed if you use
+`transunion_pdf_engine` directly; it is only needed if you use
 `services/transunion_pdf_service.py` inside a Django project. All fonts and
-the logo are loaded from `pdf_engine/assets/` -- nothing is downloaded and
+the logo are loaded from `transunion_pdf_engine/assets/` -- nothing is downloaded and
 no system fonts are required.
 
 ## Usage
@@ -33,7 +33,7 @@ no system fonts are required.
 
 ```python
 import json
-from pdf_engine import generate_report
+from transunion_pdf_engine import generate_report
 
 with open("input/transunion_response.json", encoding="utf-8") as f:
     raw_json = json.load(f)
@@ -45,7 +45,7 @@ print(f"Report written to {pdf_path}")
 ### Lower-level pipeline stages
 
 ```python
-from pdf_engine import parse_credit_report, build_story, render_pdf
+from transunion_pdf_engine import parse_credit_report, build_story, render_pdf
 
 report = parse_credit_report(raw_json)   # -> CreditReport (normalized model)
 story = build_story(report)              # -> list[Flowable]
@@ -81,7 +81,7 @@ otherwise (e.g. under plain `pytest`).
 ## Project layout
 
 ```
-pdf_engine/
+transunion_pdf_engine/
     __init__.py       # public API: generate_report, parse_credit_report, build_story, render_pdf
     parser.py         # raw JSON -> normalized CreditReport (defensive, never raises)
     models.py          # dataclasses: CreditReport, Customer, Account, Enquiry, ...
@@ -119,7 +119,7 @@ enquiry counts and values), malformed/missing/null/`-1`/single-item-instead-
 of-array JSON shapes, PDF generation and page count, presence of every
 account number and enquiry in the rendered text, correct ₹ glyph rendering,
 account-number masking, and an explicit check that no sample customer PII is
-hardcoded anywhere in `pdf_engine/`.
+hardcoded anywhere in `transunion_pdf_engine/`.
 
 ## Design notes
 
@@ -131,7 +131,7 @@ hardcoded anywhere in `pdf_engine/`.
   quirk are normalized.
 - **Code tables, not guesses.** TransUnion's enum-like fields
   (`{"symbol": "02", "description": ""}`) arrive with an empty description
-  in this feed. `pdf_engine/constants.py` translates every `symbol` using
+  in this feed. `transunion_pdf_engine/constants.py` translates every `symbol` using
   standard published TransUnion CIBIL code tables, with a safe
   `"Unknown (code)"` fallback for anything not covered -- never a crash, never
   a fabricated label.

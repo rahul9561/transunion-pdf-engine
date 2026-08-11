@@ -15,6 +15,6 @@ def raw_json():
 
 @pytest.fixture(scope="session")
 def parsed_report(raw_json):
-    from pdf_engine.parser import parse_credit_report
+    from transunion_pdf_engine.parser import parse_credit_report
 
     return parse_credit_report(raw_json)

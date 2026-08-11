@@ -2,7 +2,7 @@
 
 Public API::
 
-    from pdf_engine import generate_report
+    from transunion_pdf_engine import generate_report
 
     pdf_path = generate_report(raw_json, "output/report.pdf")
 
@@ -18,8 +18,8 @@ integration lives entirely in ``services/transunion_pdf_service.py``, outside
 this package.
 """
 
-from pdf_engine.generator import build_story, generate_report, render_pdf
-from pdf_engine.parser import parse_credit_report
+from transunion_pdf_engine.generator import build_story, generate_report, render_pdf
+from transunion_pdf_engine.parser import parse_credit_report
 
 __all__ = [
     "generate_report",

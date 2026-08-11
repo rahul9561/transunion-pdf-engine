@@ -1,9 +1,9 @@
-"""Django-facing wrapper around :mod:`pdf_engine`.
+"""Django-facing wrapper around :mod:`transunion_pdf_engine`.
 
 This is the ONLY file in this project allowed to import Django. Everything
-under ``pdf_engine/`` is framework-agnostic: it knows nothing about Django
+under ``transunion_pdf_engine/`` is framework-agnostic: it knows nothing about Django
 settings, models, storage, or HTTP. This module exists purely to adapt
-``pdf_engine.generate_report`` to a Django project's conventions (resolving
+``transunion_pdf_engine.generate_report`` to a Django project's conventions (resolving
 ``MEDIA_ROOT``, accepting a model instance to derive a filename, etc.).
 
 If Django is not installed or not configured, this module still imports
@@ -18,7 +18,7 @@ import logging
 import os
 from typing import Any
 
-from pdf_engine import generate_report
+from transunion_pdf_engine import generate_report
 
 logger = logging.getLogger(__name__)
 
@@ -29,7 +29,7 @@ DEFAULT_FALLBACK_DIR = "output"
 class TransUnionPDFService:
     """Generates TransUnion CIBIL report PDFs for a Django application.
 
-    Wraps :func:`pdf_engine.generate_report`, resolving the output path
+    Wraps :func:`transunion_pdf_engine.generate_report`, resolving the output path
     against Django's ``MEDIA_ROOT`` when available.
     """
 

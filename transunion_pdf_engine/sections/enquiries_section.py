@@ -4,9 +4,9 @@ from __future__ import annotations
 
 from reportlab.platypus import KeepTogether, Paragraph, Spacer
 
-from pdf_engine import constants
-from pdf_engine.helpers import card_grid_from_entries, format_currency, format_date, format_text, section_heading
-from pdf_engine.models import CreditReport
+from transunion_pdf_engine import constants
+from transunion_pdf_engine.helpers import card_grid_from_entries, format_currency, format_date, format_text, section_heading
+from transunion_pdf_engine.models import CreditReport
 
 
 def render(story: list, report: CreditReport, styles: dict) -> None:

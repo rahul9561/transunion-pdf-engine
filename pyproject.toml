@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "transunion-pdf-engine"
+version = "1.0.0"
+description = "Generate TransUnion credit report PDFs from JSON data"
+readme = "README.md"
+requires-python = ">=3.10"
+
+authors = [
+    {name = "Rahul Kumar"}
+]
+
+dependencies = [
+    "reportlab>=4.0",
+    "svglib>=1.5",
+    "pypdf>=5.0"
+]
+
+
+[tool.setuptools.packages.find]
+include = [
+    "transunion_pdf_engine",
+    "transunion_pdf_engine.*"
+]
+
+
+[tool.setuptools.package-data]
+transunion_pdf_engine = [
+    "assets/**/*",
+    "assets/*",
+    "**/*.ttf",
+    "**/*.otf"
+]

@@ -41,7 +41,7 @@ Shorthand used below:
 Every TransUnion enum-like object (`{"symbol": "...", "description": "", "rank": "100000", "abbreviation": ""}`)
 arrives with an **empty `description`** in this feed — the bureau does not
 populate the text form. The PDF must therefore translate `symbol` values using
-static TransUnion/CIBIL code tables (`pdf_engine/constants.py`), never the
+static TransUnion/CIBIL code tables (`transunion_pdf_engine/constants.py`), never the
 JSON's own (blank) description field. This was confirmed by cross-referencing
 every symbol in the fixture against the text shown in `docs/sample_report.pdf.pdf`
 (see "Code tables" section at the end).
@@ -201,7 +201,7 @@ All from `SUMMARY` (`root["report_summary"]`), cross-checked against
 ## 11. Disclaimer (page 11, footer of every page)
 
 Not present anywhere in the JSON — this is **static regulatory text**, owned
-by the PDF engine itself (`pdf_engine/constants.py::DISCLAIMER_TEXT` and
+by the PDF engine itself (`transunion_pdf_engine/constants.py::DISCLAIMER_TEXT` and
 `FOOTER_TEXT`), reproduced verbatim from the sample PDF:
 
 > "All information contained in this credit report has been collated by
@@ -223,16 +223,16 @@ split running header/footer). This pass changed **presentation only** --
 every JSON path in this document is unchanged. Assets used, all local,
 none downloaded:
 
-- `pdf_engine/assets/cibil-logo.svg` -- the CIBIL wordmark, rendered via
+- `transunion_pdf_engine/assets/cibil-logo.svg` -- the CIBIL wordmark, rendered via
   `svglib` (`svg2rlg`) into a scaled ReportLab `Drawing` in
   `helpers.logo_drawing()`. If the SVG can't be loaded for any reason, the
   engine falls back to a text "CIBIL / Part of TransUnion" brand block
   (`score_section._brand_block`) rather than failing.
-- `pdf_engine/assets/Montserrat/static/Montserrat-{SemiBold,Bold}.ttf` --
+- `transunion_pdf_engine/assets/Montserrat/static/Montserrat-{SemiBold,Bold}.ttf` --
   page title ("CIBIL Score & Report"), greeting, and cyan section headings.
-- `pdf_engine/assets/Poppins/Poppins-Bold.ttf` -- the large numeric score in
+- `transunion_pdf_engine/assets/Poppins/Poppins-Bold.ttf` -- the large numeric score in
   the gauge.
-- `pdf_engine/assets/Roboto/static/Roboto-{Regular,Medium,Bold}.ttf` --
+- `transunion_pdf_engine/assets/Roboto/static/Roboto-{Regular,Medium,Bold}.ttf` --
   everything else: field labels/values, table cells, footer, disclaimer.
 
 All three families embed the Indian Rupee glyph (U+20B9), confirmed via
@@ -255,7 +255,7 @@ and currency to `"Rs. "`, if an asset file is ever missing).
 
 ---
 
-## Code tables required (`pdf_engine/constants.py`)
+## Code tables required (`transunion_pdf_engine/constants.py`)
 
 Derived by cross-referencing every `symbol` value present in the fixture
 against the corresponding rendered text in `docs/sample_report.pdf.pdf`, and

@@ -1,4 +1,4 @@
-"""Tests for pdf_engine.generator: story assembly and PDF rendering."""
+"""Tests for transunion_pdf_engine.generator: story assembly and PDF rendering."""
 
 from __future__ import annotations
 
@@ -6,9 +6,9 @@ import os
 
 from reportlab.platypus import PageBreak
 
-from pdf_engine.generator import build_story, generate_report, render_pdf
-from pdf_engine.models import CreditReport
-from pdf_engine.parser import parse_credit_report
+from transunion_pdf_engine.generator import build_story, generate_report, render_pdf
+from transunion_pdf_engine.models import CreditReport
+from transunion_pdf_engine.parser import parse_credit_report
 
 
 def test_build_story_returns_nonempty_flowable_list(parsed_report: CreditReport):

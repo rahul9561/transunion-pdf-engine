@@ -1,7 +1,7 @@
 """Framework-agnostic safe-extraction and formatting helpers.
 
-Used by :mod:`pdf_engine.parser` (to defensively pull values out of the raw
-TransUnion JSON) and by :mod:`pdf_engine.sections` (to format normalized
+Used by :mod:`transunion_pdf_engine.parser` (to defensively pull values out of the raw
+TransUnion JSON) and by :mod:`transunion_pdf_engine.sections` (to format normalized
 model values for display). Nothing here ever raises on bad input -- callers
 get ``None``/``"-"`` and a logged warning instead.
 """
@@ -13,9 +13,9 @@ from datetime import date, datetime
 from decimal import Decimal, InvalidOperation
 from typing import Any
 
-from pdf_engine.constants import SENTINEL_STRINGS
+from transunion_pdf_engine.constants import SENTINEL_STRINGS
 
-logger = logging.getLogger("pdf_engine")
+logger = logging.getLogger("transunion_pdf_engine")
 
 DASH = "-"
 
@@ -199,7 +199,7 @@ def format_currency(amount: Decimal | int | None) -> str:
     if amount is None:
         return DASH
     try:
-        from pdf_engine import theme
+        from transunion_pdf_engine import theme
 
         return theme.CURRENCY_SYMBOL + indian_number_format(int(amount))
     except (ValueError, TypeError, OverflowError):
@@ -311,8 +311,8 @@ def card_grid_from_entries(entries, styles, col_widths=None):
 def _card_grid(rows, styles, n_cols, col_widths):
     from reportlab.platypus import Table
 
-    from pdf_engine import theme
-    from pdf_engine.styles import card_outer_style, grid_table_style
+    from transunion_pdf_engine import theme
+    from transunion_pdf_engine.styles import card_outer_style, grid_table_style
 
     inner = Table(_grid_rows(rows, styles), colWidths=col_widths)
     inner.setStyle(
@@ -331,7 +331,7 @@ def plain_header_grid(pairs, styles, n_cols: int = 4, col_widths=None):
     """
     from reportlab.platypus import Table
 
-    from pdf_engine.styles import grid_table_style
+    from transunion_pdf_engine.styles import grid_table_style
 
     rows = _chunk_pairs(list(pairs), n_cols)
     table = Table(_grid_rows(rows, styles), colWidths=col_widths)
@@ -345,8 +345,8 @@ def bordered_grid(pairs, styles, n_cols: int = 2, col_widths=None):
     """
     from reportlab.platypus import Table
 
-    from pdf_engine import theme
-    from pdf_engine.styles import grid_table_style
+    from transunion_pdf_engine import theme
+    from transunion_pdf_engine.styles import grid_table_style
 
     rows = _chunk_pairs(list(pairs), n_cols)
     table = Table(_grid_rows(rows, styles), colWidths=col_widths)
@@ -365,8 +365,8 @@ def field_rows_table(pairs, styles, col_widths=None):
     """
     from reportlab.platypus import Paragraph, Table
 
-    from pdf_engine import theme
-    from pdf_engine.styles import field_rows_style
+    from transunion_pdf_engine import theme
+    from transunion_pdf_engine.styles import field_rows_style
 
     if col_widths is None:
         col_widths = [theme.CONTENT_WIDTH * 0.62, theme.CONTENT_WIDTH * 0.38]
@@ -384,8 +384,8 @@ def legend_box(styles):
     """Bordered two-column box for the STD/SUB/DBT/LSS/SMA/XXX/### legend."""
     from reportlab.platypus import Paragraph, Table
 
-    from pdf_engine import constants, theme
-    from pdf_engine.styles import legend_box_style
+    from transunion_pdf_engine import constants, theme
+    from transunion_pdf_engine.styles import legend_box_style
 
     legend = constants.PAY_STATUS_LEGEND
     left_items = legend[0::2]
@@ -409,7 +409,7 @@ def bullet_heading(text: str, dot_color, styles):
     from reportlab.graphics.shapes import Circle, Drawing
     from reportlab.platypus import Paragraph, Table
 
-    from pdf_engine import theme
+    from transunion_pdf_engine import theme
 
     dot = Drawing(12, 12)
     dot.add(Circle(5, 5, 4, fillColor=dot_color, strokeColor=None))
@@ -432,7 +432,7 @@ def hr_rule(color=None, thickness: float = 0.6, space_before: float = 4, space_a
     """A thin full-width horizontal divider rule."""
     from reportlab.platypus import HRFlowable
 
-    from pdf_engine import theme
+    from transunion_pdf_engine import theme
 
     return HRFlowable(
         width="100%",
@@ -448,7 +448,7 @@ _LOGO_DRAWING_CACHE: dict = {}
 
 
 def logo_drawing(target_width: float):
-    """Load ``pdf_engine/assets/cibil-logo.svg`` as a ReportLab Drawing
+    """Load ``transunion_pdf_engine/assets/cibil-logo.svg`` as a ReportLab Drawing
     flowable, scaled to ``target_width`` with aspect ratio preserved. Returns
     ``None`` if the asset can't be loaded (caller should fall back to text).
     Cached by target width since the logo is a static local asset.
@@ -456,7 +456,7 @@ def logo_drawing(target_width: float):
     if target_width in _LOGO_DRAWING_CACHE:
         return _LOGO_DRAWING_CACHE[target_width]
 
-    from pdf_engine import theme
+    from transunion_pdf_engine import theme
 
     try:
         from svglib.svglib import svg2rlg

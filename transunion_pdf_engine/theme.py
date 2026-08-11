@@ -3,7 +3,7 @@
 Tuned to match ``docs/sample_report.pdf.pdf``: A4, generous margins, a cyan
 CIBIL brand accent, light-gray section cards, and a clean corporate
 typographic system built entirely from the fonts shipped in
-``pdf_engine/assets/`` (Montserrat, Poppins, Roboto). No system fonts and no
+``transunion_pdf_engine/assets/`` (Montserrat, Poppins, Roboto). No system fonts and no
 network font downloads are used -- every font is embedded from a local TTF.
 """
 
@@ -83,7 +83,7 @@ def color_for_band(band: str) -> colors.Color:
 
 
 # ---------------------------------------------------------------------------
-# Fonts -- embedded from pdf_engine/assets/, never system fonts, never
+# Fonts -- embedded from transunion_pdf_engine/assets/, never system fonts, never
 # downloaded. All three families ship the Indian Rupee glyph (U+20B9), so
 # currency always renders with the real "₹" symbol.
 # ---------------------------------------------------------------------------

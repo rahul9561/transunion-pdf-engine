@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from pdf_engine.helpers import card_grid_from_pairs, format_date, format_text, heading_with_card
-from pdf_engine.models import CreditReport
+from transunion_pdf_engine.helpers import card_grid_from_pairs, format_date, format_text, heading_with_card
+from transunion_pdf_engine.models import CreditReport
 
 
 def render(story: list, report: CreditReport, styles: dict) -> None:

@@ -8,8 +8,8 @@ from __future__ import annotations
 from reportlab.lib.units import cm
 from reportlab.platypus import KeepTogether, Paragraph, Spacer, Table
 
-from pdf_engine import constants, theme
-from pdf_engine.helpers import (
+from transunion_pdf_engine import constants, theme
+from transunion_pdf_engine.helpers import (
     bordered_grid,
     bullet_heading,
     field_rows_table,
@@ -23,8 +23,8 @@ from pdf_engine.helpers import (
     plain_header_grid,
     section_heading,
 )
-from pdf_engine.models import Account, CreditReport
-from pdf_engine.styles import payment_grid_style
+from transunion_pdf_engine.models import Account, CreditReport
+from transunion_pdf_engine.styles import payment_grid_style
 
 
 def render(story: list, report: CreditReport, styles: dict) -> None:

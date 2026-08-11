@@ -1,9 +1,9 @@
 """Normalized, framework-agnostic data model for a parsed CIBIL report.
 
-Every value here has already been cleaned by :mod:`pdf_engine.parser`:
+Every value here has already been cleaned by :mod:`transunion_pdf_engine.parser`:
 TransUnion sentinels (``-1``, ``-1.00``, empty string) have been collapsed to
 ``None``, dates are ``date`` objects, and coded fields carry both the raw
-``*_code`` and the human ``*_label`` translated via :mod:`pdf_engine.constants`.
+``*_code`` and the human ``*_label`` translated via :mod:`transunion_pdf_engine.constants`.
 
 Section renderers should never need to touch raw JSON or code tables -- only
 these dataclasses.

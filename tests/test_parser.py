@@ -1,4 +1,4 @@
-"""Tests for pdf_engine.parser against the real TransUnion fixture and
+"""Tests for transunion_pdf_engine.parser against the real TransUnion fixture and
 against defensively-malformed input.
 """
 
@@ -7,8 +7,8 @@ from __future__ import annotations
 from datetime import date
 from decimal import Decimal
 
-from pdf_engine.models import CreditReport
-from pdf_engine.parser import parse_credit_report
+from transunion_pdf_engine.models import CreditReport
+from transunion_pdf_engine.parser import parse_credit_report
 
 
 # ---------------------------------------------------------------------------

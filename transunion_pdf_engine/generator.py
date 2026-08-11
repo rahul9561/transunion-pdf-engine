@@ -1,8 +1,8 @@
 """Builds the ReportLab flowable story and renders it to a PDF file.
 
-This module (together with the rest of ``pdf_engine``) is framework-agnostic
+This module (together with the rest of ``transunion_transunion_pdf_engine``) is framework-agnostic
 -- it knows nothing about Django, HTTP, or any calling application. The only
-inputs are a :class:`~pdf_engine.models.CreditReport` and an output path.
+inputs are a :class:`~transunion_transunion_pdf_engine.models.CreditReport` and an output path.
 """
 
 from __future__ import annotations
@@ -14,11 +14,11 @@ from typing import Any
 from reportlab.pdfgen import canvas as reportlab_canvas
 from reportlab.platypus import PageBreak, SimpleDocTemplate
 
-from pdf_engine import constants, theme
-from pdf_engine.helpers import mask_account_number
-from pdf_engine.models import CreditReport
-from pdf_engine.parser import parse_credit_report
-from pdf_engine.sections import (
+from transunion_pdf_engine import constants, theme
+from transunion_pdf_engine.helpers import mask_account_number
+from transunion_pdf_engine.models import CreditReport
+from transunion_pdf_engine.parser import parse_credit_report
+from transunion_pdf_engine.sections import (
     accounts_section,
     address_section,
     contact_section,
@@ -29,9 +29,9 @@ from pdf_engine.sections import (
     personal_details_section,
     score_section,
 )
-from pdf_engine.styles import get_paragraph_styles
+from transunion_pdf_engine.styles import get_paragraph_styles
 
-logger = logging.getLogger("pdf_engine")
+logger = logging.getLogger("transunion_pdf_engine")
 
 
 def build_story(report: CreditReport) -> list:
