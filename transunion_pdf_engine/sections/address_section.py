@@ -26,4 +26,4 @@ def render(story: list, report: CreditReport, styles: dict) -> None:
     inner_width = theme.CONTENT_WIDTH - 18
     col_widths = [inner_width * 0.40, inner_width * 0.22, inner_width * 0.18, inner_width * 0.20]
     card = card_grid_from_entries(entries, styles, col_widths=col_widths)
-    story.append(heading_with_card("ADDRESS DETAILS", styles, card))
+    story.extend(heading_with_card("ADDRESS DETAILS", styles, card))

@@ -14,4 +14,4 @@ def render(story: list, report: CreditReport, styles: dict) -> None:
         ("Gender", format_text(customer.gender)),
     ]
     card = card_grid_from_pairs(pairs, styles, n_cols=3)
-    story.append(heading_with_card("PERSONAL DETAILS", styles, card))
+    story.extend(heading_with_card("PERSONAL DETAILS", styles, card))

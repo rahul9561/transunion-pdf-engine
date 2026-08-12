@@ -95,11 +95,20 @@ def _account_details_block(account: Account, styles: dict) -> list:
 
 
 def _account_payment_block(account: Account, styles: dict) -> list:
-    """PAYMENT STATUS heading + date range + history grid + legend, kept
-    together as one cohesive unit tied to its account.
+    """PAYMENT STATUS heading + date range + history grid + legend.
+
+    The heading/date-range/"Payment History" label are small and fixed in
+    size, so they are kept together as one unit (never orphaned at a page
+    break). The history grid itself is intentionally *not* placed inside
+    that (or any) KeepTogether: with many years of history it can grow
+    taller than a single page, and KeepTogether forces ReportLab to fit the
+    whole flowable in one frame, which raises LayoutError once it can't.
+    Left as a bare Table in the story, it is allowed to split across pages
+    naturally, and its header row is repeated on each page via
+    ``repeatRows`` (see ``_payment_history_table``).
     """
-    elements = [Paragraph("PAYMENT STATUS", styles["subsection_heading"])]
-    elements.append(
+    header = [Paragraph("PAYMENT STATUS", styles["subsection_heading"])]
+    header.append(
         bordered_grid(
             [
                 ("Payment Start Date", format_date(account.payment_history.start_date)),
@@ -109,17 +118,20 @@ def _account_payment_block(account: Account, styles: dict) -> list:
             n_cols=2,
         )
     )
-    elements.append(Spacer(1, 6))
+    header.append(Spacer(1, 6))
 
     grid = _payment_history_table(account, styles)
     if grid is not None:
-        elements.append(Paragraph("Payment History", styles["row_label"]))
-        elements.append(Spacer(1, 3))
+        header.append(Paragraph("Payment History", styles["row_label"]))
+        header.append(Spacer(1, 3))
+
+    elements = [KeepTogether(header)]
+    if grid is not None:
         elements.append(grid)
         elements.append(Spacer(1, 6))
 
     elements.append(legend_box(styles))
-    return [KeepTogether(elements)]
+    return elements
 
 
 def _account_field_pairs(account: Account) -> list[tuple[str, str]]:
@@ -160,6 +172,6 @@ def _payment_history_table(account: Account, styles: dict):
 
     year_col = 1.4 * cm
     month_col = (theme.CONTENT_WIDTH - year_col) / 12
-    table = Table(rows, colWidths=[year_col] + [month_col] * 12)
+    table = Table(rows, colWidths=[year_col] + [month_col] * 12, repeatRows=1)
     table.setStyle(payment_grid_style())
     return table

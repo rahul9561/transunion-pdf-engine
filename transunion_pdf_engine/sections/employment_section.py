@@ -20,4 +20,4 @@ def render(story: list, report: CreditReport, styles: dict) -> None:
         ("Net / Gross Income Indicator", format_text(employment.net_gross_indicator)),
     ]
     card = card_grid_from_pairs(pairs, styles, n_cols=4)
-    story.append(heading_with_card("EMPLOYMENT DETAILS", styles, card))
+    story.extend(heading_with_card("EMPLOYMENT DETAILS", styles, card))

@@ -22,4 +22,4 @@ def render(story: list, report: CreditReport, styles: dict) -> None:
         for identifier in identifiers
     ]
     card = card_grid_from_entries(entries, styles)
-    story.append(heading_with_card("IDENTIFICATION DETAILS", styles, card))
+    story.extend(heading_with_card("IDENTIFICATION DETAILS", styles, card))

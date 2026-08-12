@@ -249,14 +249,24 @@ def section_heading(text: str, styles):
     return Paragraph(text, styles["section_heading"])
 
 
-def heading_with_card(text: str, styles, card, *, space_after: int = 10):
-    """A section heading glued to the card that follows it, so the heading
-    never gets orphaned alone at the bottom of a page while its card starts
-    on the next one.
+def heading_with_card(text: str, styles, card, *, space_after: int = 10) -> list:
+    """A section heading glued to a small lead-in spacer, so the heading
+    never gets orphaned alone at the bottom of a page.
+
+    ``card`` is deliberately kept *outside* that KeepTogether and returned
+    as a separate list item: cards built from a list of entries (addresses,
+    phones, identifiers, enquiries) have one row per entry and can grow
+    taller than a page, and KeepTogether forces its whole contents to fit
+    in a single frame -- which raises LayoutError once they can't. Left as
+    a bare flowable in the story, the card is free to split across pages
+    via its own Table row-splitting.
+
+    Returns a list of flowables -- callers must ``story.extend(...)`` the
+    result rather than ``story.append(...)`` it.
     """
     from reportlab.platypus import KeepTogether, Spacer
 
-    return KeepTogether([section_heading(text, styles), Spacer(1, 4), card, Spacer(1, space_after)])
+    return [KeepTogether([section_heading(text, styles), Spacer(1, 4)]), card, Spacer(1, space_after)]
 
 
 def _grid_rows(rows, styles):
@@ -299,13 +309,33 @@ def card_grid_from_pairs(pairs, styles, n_cols: int = 3, col_widths=None):
 
 
 def card_grid_from_entries(entries, styles, col_widths=None):
-    """Light-gray card wrapping a white bordered grid where each ``entry``
-    (a list of ``(label, value)`` pairs, all the same length) is its own row,
-    separated by a divider -- used for multiple identifiers/addresses/phones.
+    """White bordered grid where each ``entry`` (a list of ``(label, value)``
+    pairs, all the same length) is its own row, separated by a divider --
+    used for multiple identifiers/addresses/phones/enquiries.
+
+    Unlike ``card_grid_from_pairs``, this returns the grid ``Table`` directly
+    instead of nesting it inside a 1-row/1-col outer "card" wrapper Table.
+    The number of rows here is one per entry and is not bounded (a report
+    can have dozens of enquiries, for example), and a 1-row outer wrapper
+    can never split across pages -- ReportLab's Table.split() only splits
+    at row boundaries, so a table with exactly one row either fits a frame
+    whole or raises LayoutError. Returning a genuine multi-row Table lets
+    it split by row like any other table once it's taller than a page.
     """
+    from reportlab.platypus import Table
+
+    from transunion_pdf_engine import theme
+    from transunion_pdf_engine.styles import grid_table_style
+
     entries = list(entries)
     n_cols = len(entries[0]) if entries else 1
-    return _card_grid(entries, styles, n_cols, col_widths)
+    table = Table(_grid_rows(entries, styles), colWidths=col_widths)
+    table.setStyle(
+        grid_table_style(
+            n_cols, len(entries), background=theme.CARD_INNER_BG, box=True, divider_cols=True, divider_rows=True
+        )
+    )
+    return table
 
 
 def _card_grid(rows, styles, n_cols, col_widths):

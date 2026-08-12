@@ -30,8 +30,13 @@ def render(story: list, report: CreditReport, styles: dict) -> None:
                 Spacer(1, 3),
                 Paragraph(constants.ENQUIRY_NOTE, styles["body_small"]),
                 Spacer(1, 5),
-                card,
-                Spacer(1, 10),
             ]
         )
     )
+    # `card` is a real multi-row Table (one row per enquiry) and is kept out
+    # of the KeepTogether above: a report can have many enquiries, so this
+    # table can grow taller than one page. KeepTogether forces its whole
+    # contents into a single frame, which raises LayoutError once the card
+    # can't fit -- left bare in the story, it splits across pages by row.
+    story.append(card)
+    story.append(Spacer(1, 10))

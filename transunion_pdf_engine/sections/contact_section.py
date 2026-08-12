@@ -18,8 +18,8 @@ def render(story: list, report: CreditReport, styles: dict) -> None:
             for phone in phones
         ]
         card = card_grid_from_entries(entries, styles)
-        story.append(heading_with_card("CONTACT DETAILS", styles, card))
+        story.extend(heading_with_card("CONTACT DETAILS", styles, card))
 
     if report.customer.email:
         card = card_grid_from_pairs([("Email ID", format_text(report.customer.email))], styles, n_cols=1)
-        story.append(heading_with_card("EMAIL DETAILS", styles, card))
+        story.extend(heading_with_card("EMAIL DETAILS", styles, card))
