@@ -75,7 +75,7 @@ def _account_header(account: Account, styles: dict) -> Table:
         ("Member Name", format_text(account.creditor_name)),
         ("Account Type", format_text(account.account_type_label)),
         ("Account Number", format_text(account.account_number)),
-        ("Ownership", format_text(account.ownership_label)),
+        ("Ownership", format_text(account.ownership_label)),  
     ]
     return plain_header_grid(header_pairs, styles, n_cols=4)
 
@@ -151,6 +151,7 @@ def _account_field_pairs(account: Account) -> list[tuple[str, str]]:
         ("Date of Last Payment", format_date(account.date_last_payment)),
         ("Date Reported And Certified", format_date(account.date_reported)),
         ("Value of Collateral", format_currency(account.collateral_value)),
+        ("Credit Facility Status", "- "),
         ("Written-off Amount (Total)", format_currency(account.written_off_total)),
         ("Written-off Amount (Principal)", format_currency(account.written_off_principal)),
         ("Settlement Amount", format_currency(account.settlement_amount)),
